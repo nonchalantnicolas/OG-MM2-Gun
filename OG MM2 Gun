@@ -58,6 +58,8 @@ local LocalPlayer = Players.LocalPlayer
 local BLOCKED = {
     ["123606547020560"] = true,
     ["134826825394657"] = true,
+    ["124281955370937"] = true,
+    ["127786188145385"] = true,
 }
 local SOUND_ID = "rbxassetid://7158356564"
 
@@ -216,7 +218,7 @@ end
 
 local section = shared.AddSection("OG Gun")
 
-section:AddParagraph("Credits", "@drowsynicolas")
+section:AddParagraph("Information", "This plugin works for both MM2 and MMV\n\nCredits: @drowsynicolas")
 
 section:AddToggle("Remove shoot and reload animation", function(bool)
     features.blockAnims = bool
