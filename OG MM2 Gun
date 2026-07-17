@@ -218,7 +218,7 @@ end
 
 local section = shared.AddSection("OG Gun")
 
-section:AddParagraph("Information", "This plugin works for both MM2 and MMV\n\nCredits: @drowsynicolas")
+section:AddParagraph("Side Notes", "This plugin works for both MM2 and MMV\n\nCredits: @drowsynicolas")
 
 section:AddToggle("Remove shoot and reload animation", function(bool)
     features.blockAnims = bool
