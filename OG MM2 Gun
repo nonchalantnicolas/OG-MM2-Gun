@@ -94,11 +94,9 @@ local function cleanCharacter(character)
 end
 
 local function playEquipSound(character)
-    local existing = currentSounds[character]
-    if existing then
-        existing:Stop()
-        existing:Destroy()
-        currentSounds[character] = nil
+    -- If a sound is already playing for this character, do nothing (ignore new equip)
+    if currentSounds[character] then
+        return
     end
 
     local hrp = character:FindFirstChild("HumanoidRootPart")
