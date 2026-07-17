@@ -94,9 +94,11 @@ local function cleanCharacter(character)
 end
 
 local function playEquipSound(character)
-    -- If a sound is already playing for this character, do nothing (ignore new equip)
-    if currentSounds[character] then
-        return
+    local existing = currentSounds[character]
+    if existing then
+        existing:Stop()
+        existing:Destroy()
+        currentSounds[character] = nil
     end
 
     local hrp = character:FindFirstChild("HumanoidRootPart")
@@ -245,7 +247,7 @@ local section = shared.AddSection("OG Gun")
 
 section:AddParagraph("Additional Info", "This plugin works for both MM2 and MMV\n\nCredits: @drowsynicolas")
 
-section:AddToggle("Remove gun animations", function(bool)
+section:AddToggle("Disable gun animations", function(bool)
     features.blockAnims = bool
     if bool then
         enableBlockAnims()
