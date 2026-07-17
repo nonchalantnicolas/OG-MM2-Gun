@@ -69,6 +69,7 @@ local features = {
 }
 
 local charData = {}
+local currentSounds = {}
 
 local function cleanCharacter(character)
     local data = charData[character]
@@ -83,17 +84,38 @@ local function cleanCharacter(character)
         end
         charData[character] = nil
     end
+
+    local sound = currentSounds[character]
+    if sound then
+        sound:Stop()
+        sound:Destroy()
+        currentSounds[character] = nil
+    end
 end
 
 local function playEquipSound(character)
+    local existing = currentSounds[character]
+    if existing then
+        existing:Stop()
+        existing:Destroy()
+        currentSounds[character] = nil
+    end
+
     local hrp = character:FindFirstChild("HumanoidRootPart")
     if not hrp then return end
+
     local sound = Instance.new("Sound")
     sound.SoundId = SOUND_ID
     sound.Volume = 1
     sound.Parent = hrp
     sound:Play()
+
+    currentSounds[character] = sound
+
     sound.Ended:Once(function()
+        if currentSounds[character] == sound then
+            currentSounds[character] = nil
+        end
         sound:Destroy()
     end)
 end
@@ -210,6 +232,11 @@ local function disableEquipSound()
             data.equipNicolas = nicolas.new()
         end
     end
+    for character, sound in pairs(currentSounds) do
+        sound:Stop()
+        sound:Destroy()
+        currentSounds[character] = nil
+    end
 end
 
 if LocalPlayer.Character then
@@ -218,9 +245,9 @@ end
 
 local section = shared.AddSection("OG Gun")
 
-section:AddParagraph("Side Notes", "This plugin works for both MM2 and MMV\n\nCredits: @drowsynicolas")
+section:AddParagraph("Additional Info", "This plugin works for both MM2 and MMV\n\nCredits: @drowsynicolas")
 
-section:AddToggle("Remove shoot and reload animation", function(bool)
+section:AddToggle("Remove gun animations", function(bool)
     features.blockAnims = bool
     if bool then
         enableBlockAnims()
