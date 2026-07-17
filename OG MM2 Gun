@@ -216,7 +216,7 @@ end
 
 local section = shared.AddSection("OG Gun")
 
-section:AddLabel("Credits: @drowsynicolas")
+section:AddParagraph("Credits", "@drowsynicolas")
 
 section:AddToggle("Remove shoot and reload animation", function(bool)
     features.blockAnims = bool
@@ -225,7 +225,6 @@ section:AddToggle("Remove shoot and reload animation", function(bool)
     else
         disableBlockAnims()
     end
-    shared.Notify("Animation blocking " .. (bool and "ON" or "OFF"), 2)
 end)
 
 section:AddToggle("Equip gun sound", function(bool)
@@ -235,11 +234,6 @@ section:AddToggle("Equip gun sound", function(bool)
     else
         disableEquipSound()
     end
-    shared.Notify("Equip sound " .. (bool and "ON" or "OFF"), 2)
-end)
-
-section:AddButton("Test Notify", function()
-    shared.Notify("OG Gun plugin loaded!", 3)
 end)
 
 RootNicolas:GiveTask(function()
