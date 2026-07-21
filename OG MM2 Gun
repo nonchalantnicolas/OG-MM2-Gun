@@ -93,7 +93,7 @@ local function cleanCharacter(character)
     end
 end
 
-local function playEquipSound(character)
+local function playSound(character, soundId)
     local existing = currentSounds[character]
     if existing then
         existing:Stop()
@@ -105,7 +105,7 @@ local function playEquipSound(character)
     if not hrp then return end
 
     local sound = Instance.new("Sound")
-    sound.SoundId = SOUND_ID
+    sound.SoundId = soundId
     sound.Volume = 1
     sound.Parent = hrp
     sound:Play()
@@ -122,13 +122,22 @@ end
 
 local function hookTool(tool, character, nicolasObj)
     if tool.Name ~= "Gun" then return end
-    local conn = tool.Equipped:Connect(function()
+    
+    local equipConn = tool.Equipped:Connect(function()
         if features.equipSound then
-            playEquipSound(character)
+            playSound(character, SOUND_ID)
         end
     end)
-    nicolasObj:GiveTask(conn)
-    return conn
+    nicolasObj:GiveTask(equipConn)
+    
+    local unequipConn = tool.Unequipped:Connect(function()
+        if features.equipSound then
+            playSound(character, SOUND_ID)
+        end
+    end)
+    nicolasObj:GiveTask(unequipConn)
+    
+    return equipConn, unequipConn
 end
 
 local function applyFeatures(character)
