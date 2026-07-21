@@ -109,7 +109,7 @@ local function playSound(character, soundId)
     sound.SoundId = soundId
     sound.Volume = 1
     sound.Parent = hrp
-    sound.TimePosition = START_OFFSET -- Start at the offset
+    sound.TimePosition = START_OFFSET
     sound:Play()
 
     currentSounds[character] = sound
@@ -258,7 +258,7 @@ local section = shared.AddSection("OG Gun")
 
 section:AddParagraph("Additional Info", "This plugin works for both MM2 and MMV\n\nCredits: @drowsynicolas")
 
-section:AddToggle("Disable gun animations", function(bool)
+section:AddToggle("Disable Gun Animations", function(bool)
     features.blockAnims = bool
     if bool then
         enableBlockAnims()
@@ -267,7 +267,7 @@ section:AddToggle("Disable gun animations", function(bool)
     end
 end)
 
-section:AddToggle("Equip gun sound", function(bool)
+section:AddToggle("Equip/Unequip Gun Sound", function(bool)
     features.equipSound = bool
     if bool then
         enableEquipSound()
